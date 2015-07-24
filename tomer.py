@@ -21,29 +21,23 @@ def main(argv):
 
     print 'directory is: ', path
     files = os.listdir(path)
-    print files
     similar_files = []
-
-    # for file_info in files:
-    #
-    #     print os.path.abspath(file_info)
 
     files_len = len(files)
     for i in range(0, files_len):
-        current_file = os.path.abspath(files[i])
-        print 'checking file ', current_file
+        current_file = (files[i])
+        current_file_path = path + os.sep + current_file
+        look_alike = [current_file_path]
 
-        look_alike = [current_file]
+        if os.path.isfile(current_file_path):
 
-        print '\t is path ', os.path.isfile(current_file)
+            for j in range(i + 1, files_len):
+                compare_file = (files[j])
+                compare_file_path = path + os.sep + compare_file
 
-        if os.path.isfile(current_file):
-
-            for j in range(i, files_len):
-                compare_file = os.path.abspath(files[j])
-
-                if os.path.isfile(compare_file) and filecmp.cmp(current_file, compare_file):
-                    look_alike.append(compare_file)
+                if os.path.isfile(compare_file_path) and \
+                        filecmp.cmp(current_file_path, compare_file_path):
+                    look_alike.append(compare_file_path)
 
             if len(look_alike) > 1:
                 similar_files.append(look_alike)
